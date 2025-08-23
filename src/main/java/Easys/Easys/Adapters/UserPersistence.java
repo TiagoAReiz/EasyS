@@ -2,10 +2,10 @@ package Easys.Easys.Adapters;
 
 import Easys.Easys.Adapters.Mappers.UserMapper;
 import Easys.Easys.Core.Model.User;
-import Easys.Easys.Infra.Persistence.Entities.UserEntity;
 import Easys.Easys.Infra.Persistence.Repositories.UserRepository;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,7 +16,7 @@ public class UserPersistence  {
         this.userRepository = userRepository;
         this.map = map;
     }
-    public UserEntity findByEmail(String email) {
+    public UserDetails findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
     public ResponseEntity<?> save(User user) {

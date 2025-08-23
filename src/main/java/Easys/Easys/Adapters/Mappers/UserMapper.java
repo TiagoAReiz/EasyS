@@ -2,6 +2,7 @@ package Easys.Easys.Adapters.Mappers;
 
 import Easys.Easys.Adapters.Dtos.UserDtos.UserCreateDto;
 import Easys.Easys.Core.Model.User;
+import Easys.Easys.Core.Model.Enums.Role;
 import Easys.Easys.Infra.Persistence.Entities.UserEntity;
 
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class UserMapper {
         userEntity.setState(user.getState());
         userEntity.setCountry(user.getCountry());
         userEntity.setZip(user.getZip());
+        userEntity.setRole(user.getRole() != null ? user.getRole() : Role.USER); // Default role
         userEntity.setCreatedAt(user.getCreatedAt() != null ? user.getCreatedAt() : LocalDateTime.now());
         userEntity.setUpdatedAt(user.getUpdatedAt());
         return userEntity;
