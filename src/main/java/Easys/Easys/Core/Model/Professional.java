@@ -2,43 +2,39 @@ package Easys.Easys.Core.Model;
 
 import java.time.LocalDateTime;
 
-public class Professional extends User {
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import lombok.Data;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+
+@Entity
+@Data
+public class Professional {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private Long id;
+
     private String cpf;
     private String professionalType;
     private String professionalDescription;
+    
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-    public String getCpf() {
-        return cpf;
-    }
-    public void setCpf(String cpf) {    
-        this.cpf = cpf;
-    }
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
-    public String getProfessionalType() {
-        return professionalType;
-    }
-
-    public void setProfessionalType(String professionalType) {
-        this.professionalType = professionalType;
-    }
-
-    public String getProfessionalDescription() {
-        return professionalDescription;
-    }
-
-    public void setProfessionalDescription(String professionalDescription) {
-        this.professionalDescription = professionalDescription;
-    }
-
-    public Professional() {
-        super();
-    }
-    public Professional(String name, String email, String phone, String passwordHash, LocalDateTime createdAt,
-            LocalDateTime updatedAt, String cpf, String professionalType, String professionalDescription) {
-        super();
-        this.cpf = cpf;
-        this.professionalType = professionalType;
-        this.professionalDescription = professionalDescription;
-    }
 
 }

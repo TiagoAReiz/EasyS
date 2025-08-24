@@ -1,11 +1,10 @@
-package Easys.Easys.Core.UseCases;
+package Easys.Easys.Core.UseCases.User;
 
 import org.springframework.http.ResponseEntity;
 
-import Easys.Easys.Adapters.Dtos.ProfessionalDtos.ProfessionalCreateDto;
 import Easys.Easys.Adapters.Dtos.UserDtos.UserCreateDto;
 
-public interface CreateUserUseCase {
+public interface UserCreate {
 
     public ResponseEntity<?> create(UserCreateDto userDto);
 

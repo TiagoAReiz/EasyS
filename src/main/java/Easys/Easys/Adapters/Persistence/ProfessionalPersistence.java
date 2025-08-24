@@ -1,9 +1,8 @@
-package Easys.Easys.Adapters;
+package Easys.Easys.Adapters.Persistence;
 
 import org.springframework.http.ResponseEntity;
 
-import Easys.Easys.Adapters.Mappers.ProfessionalMapper;
-import Easys.Easys.Infra.Persistence.Entities.ProfessionalEntity;
+import Easys.Easys.Core.Model.Professional;
 import Easys.Easys.Infra.Persistence.Repositories.ProfessionalRepository;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,7 @@ public class ProfessionalPersistence  {
 
     }
 
-    public ResponseEntity<?> save(ProfessionalEntity professional) {
+    public ResponseEntity<?> save(Professional professional) {
         professionalRepository.save(professional);
         return ResponseEntity.ok().build();
     }

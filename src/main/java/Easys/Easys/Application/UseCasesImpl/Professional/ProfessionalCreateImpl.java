@@ -1,38 +1,43 @@
-package Easys.Easys.Application.UseCasesImpl;
+package Easys.Easys.Application.UseCasesImpl.Professional;
 
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import Easys.Easys.Adapters.ProfessionalPersistence;
-import Easys.Easys.Adapters.UserPersistence;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import Easys.Easys.Adapters.Dtos.ProfessionalDtos.ProfessionalCreateDto;
 import Easys.Easys.Adapters.Mappers.ProfessionalMapper;
-import Easys.Easys.Core.Model.Professional;
-import Easys.Easys.Core.UseCases.ProfessionalUseCase;
-import Easys.Easys.Infra.Persistence.Entities.UserEntity;
-import org.springframework.stereotype.Service;
+import Easys.Easys.Adapters.Persistence.ProfessionalPersistence;
+import Easys.Easys.Adapters.Persistence.UserPersistence;
+import Easys.Easys.Core.Model.User;
+import Easys.Easys.Core.UseCases.Professional.ProfessionalCreate;
 
 
 @Service
-public class ProfessionalUseCaseImpl implements ProfessionalUseCase {
+public class ProfessionalCreateImpl implements ProfessionalCreate {
+
 
     private final ProfessionalMapper proMap;
     private final UserPersistence userPersistence;
     private final ProfessionalPersistence professionalPersistence;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     
 
-    public ProfessionalUseCaseImpl(
+    public ProfessionalCreateImpl(
             ProfessionalMapper proMap,
-
             UserPersistence userPersistence,
-            ProfessionalPersistence professionalPersistence
+            ProfessionalPersistence professionalPersistence,
+            BCryptPasswordEncoder passwordEncoder
 ) {
         this.proMap = proMap;
        
         this.userPersistence = userPersistence;
         this.professionalPersistence = professionalPersistence;
+        this.passwordEncoder = passwordEncoder;
 
     }
 
@@ -44,14 +49,11 @@ public class ProfessionalUseCaseImpl implements ProfessionalUseCase {
         if (professionalPersistence.existsByCpf(proDto.cpf())) {
             return new ResponseEntity<>("Professional with this CPF already exists", HttpStatus.CONFLICT);
         }
-
-        UserEntity user = proMap.toUserEntity(proDto);
+        User user = proMap.toUserModel(proDto);
+        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
         userPersistence.save(user);
+        professionalPersistence.save(proMap.toModel(proDto, user));
 
-        Professional professional = proMap.toModel(proDto);
-
-        var professionalEntity = proMap.toEntity(professional, user);
-        professionalPersistence.save(professionalEntity);
 
         return ResponseEntity.ok().build();
     }

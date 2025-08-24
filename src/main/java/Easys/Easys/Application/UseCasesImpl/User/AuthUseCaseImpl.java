@@ -1,9 +1,9 @@
-package Easys.Easys.Application.UseCasesImpl;
+package Easys.Easys.Application.UseCasesImpl.User;
 
 
 import Easys.Easys.Adapters.Dtos.UserDtos.LoginDto;
 import Easys.Easys.Adapters.Dtos.UserDtos.LoginResponse;
-import Easys.Easys.Core.UseCases.AuthUseCase;
+import Easys.Easys.Core.UseCases.User.AuthUseCase;
 import Easys.Easys.Infra.Config.Security.JwtTokenService;
 import Easys.Easys.Infra.Config.Security.UserDetailsServiceImpl;
 
