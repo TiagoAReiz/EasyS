@@ -1,20 +1,12 @@
 package Easys.Easys.Core.Model;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class Professional extends User {
-    private Long professionalId;
     private String cpf;
     private String professionalType;
     private String professionalDescription;
 
-    public Long getProfessionalId() {
-        return professionalId;
-    }
-    public void setProfessionalId(Long professionalId) {
-        this.professionalId = professionalId;
-    }
     public String getCpf() {
         return cpf;
     }
@@ -41,11 +33,12 @@ public class Professional extends User {
     public Professional() {
         super();
     }
-    public Professional(UUID id, String name, String email, String phone, String passwordHash, LocalDateTime createdAt,
-            LocalDateTime updatedAt, Long professionalId, String cpf) {
+    public Professional(String name, String email, String phone, String passwordHash, LocalDateTime createdAt,
+            LocalDateTime updatedAt, String cpf, String professionalType, String professionalDescription) {
         super();
-        this.professionalId = professionalId;
         this.cpf = cpf;
+        this.professionalType = professionalType;
+        this.professionalDescription = professionalDescription;
     }
 
 }

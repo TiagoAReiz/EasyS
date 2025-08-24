@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 
 @Service
@@ -27,30 +27,14 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserPersistence userPersistence;
 
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
-    private final ProfessionalRepository professionalRepository;
-    private final ProfessionalMapper professionalMapper;
-    private final ProfessionalMapper proMap;
-
-
     public CreateUserUseCaseImpl(
             UserMapper map,
             BCryptPasswordEncoder passwordEncoder,
-            UserPersistence userPersistence,
-            UserRepository userRepository,
-            UserMapper userMapper,
-            ProfessionalMapper professionalMapper,
-            ProfessionalMapper proMap,
-            ProfessionalRepository professionalRepository) {
+            UserPersistence userPersistence) {
         this.map = map;
         this.passwordEncoder = passwordEncoder;
         this.userPersistence = userPersistence;
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;       
-        this.professionalRepository = professionalRepository;
-        this.professionalMapper = professionalMapper;
-        this.proMap = proMap;
+        
     }
 
     @Override
@@ -60,30 +44,8 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
             return new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);
         }
         user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
-        return userPersistence.save(user);
+        return userPersistence.save(map.toEntity(user));
     }
 
-    @Override
-    @Transactional
-    public ResponseEntity<?> createProfessional(ProfessionalCreateDto proDto) {
-        if (userRepository.findByEmail(proDto.email()) != null) {
-            return new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);
-        }
-        if (professionalRepository.existsByCpf(proDto.cpf())) {
-            return new ResponseEntity<>("Professional with this CPF already exists", HttpStatus.CONFLICT);
-        }
-
-        User user = proMap.toUserModel(proDto);
-        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
-
-        UserEntity userEntity = userMapper.toEntity(user);
-        userEntity = userRepository.save(userEntity);
-
-        Professional professional = proMap.toModel(proDto);
-
-        var professionalEntity = professionalMapper.toEntity(professional, userEntity);
-        professionalRepository.save(professionalEntity);
-
-        return ResponseEntity.ok().build();
-    }
+   
 }

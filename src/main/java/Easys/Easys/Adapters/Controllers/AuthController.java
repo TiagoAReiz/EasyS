@@ -7,6 +7,7 @@ import Easys.Easys.Adapters.Dtos.UserDtos.UserCreateDto;
 import Easys.Easys.Core.UseCases.AuthUseCase;
 import Easys.Easys.Core.UseCases.CreateUserUseCase;
 
+import Easys.Easys.Core.UseCases.ProfessionalUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,14 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("auth")
-public class UserController {
+public class AuthController {
 
     private final CreateUserUseCase createUserUseCase;
     private final AuthUseCase authUseCase;
+    private final ProfessionalUseCase professionalUseCase;
 
-    public UserController(CreateUserUseCase createUserUseCase, AuthUseCase authUseCase) {
+    public AuthController(CreateUserUseCase createUserUseCase, AuthUseCase authUseCase, ProfessionalUseCase professionalUseCase) {
         this.createUserUseCase = createUserUseCase;
         this.authUseCase = authUseCase;
+        this.professionalUseCase = professionalUseCase;
     }
 
     @PostMapping("/create")
@@ -32,7 +35,7 @@ public class UserController {
 
     @PostMapping("/create-professional")
     public ResponseEntity<?> createProfessional(@RequestBody ProfessionalCreateDto proDto) {
-        return createUserUseCase.createProfessional(proDto);
+        return professionalUseCase.createProfessional(proDto);
     }
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) {

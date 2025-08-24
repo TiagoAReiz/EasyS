@@ -18,8 +18,8 @@ public class ProfessionalMapper {
         professional.setProfessionalDescription(dto.professionalDescription());
         return professional;
     }
-    public User toUserModel(ProfessionalCreateDto dto){
-        User user = new User();
+    public UserEntity toUserEntity(ProfessionalCreateDto dto){
+        UserEntity user = new UserEntity();
         user.setUsername(dto.username());
         user.setEmail(dto.email());
         user.setPhone(dto.phone());
@@ -35,7 +35,7 @@ public class ProfessionalMapper {
     }
     public ProfessionalEntity toEntity(Professional professional, UserEntity userEntity) {
         ProfessionalEntity entity = new ProfessionalEntity();
-        entity.setUser(userEntity); // FK
+        entity.setUser(userEntity);
         entity.setCpf(professional.getCpf());
         entity.setProfessionalType(professional.getProfessionalType());
         entity.setProfessionalDescription(professional.getProfessionalDescription());
@@ -44,8 +44,6 @@ public class ProfessionalMapper {
 
     public Professional toDomain(ProfessionalEntity entity) {
         Professional professional = new Professional();
-        // id próprio do professional
-        professional.setProfessionalId(entity.getId());
         professional.setCpf(entity.getCpf());
         professional.setProfessionalType(entity.getProfessionalType());
         professional.setProfessionalDescription(entity.getProfessionalDescription());

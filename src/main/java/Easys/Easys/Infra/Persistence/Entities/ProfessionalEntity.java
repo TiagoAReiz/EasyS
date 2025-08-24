@@ -1,5 +1,7 @@
 package Easys.Easys.Infra.Persistence.Entities;
 
+;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,11 +16,11 @@ public class ProfessionalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // PK própria do Professional
+    private Long id;
 
     @OneToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private UserEntity user; // FK para User
+    private UserEntity user;
 
     private String cpf;
     private String professionalType;

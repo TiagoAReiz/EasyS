@@ -3,10 +3,9 @@ package Easys.Easys.Core.Model;
 import Easys.Easys.Core.Model.Enums.Role;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+
 
 public class User  {
-    private UUID id;
     private String username;
     private String email;
     private String phone;
@@ -28,9 +27,8 @@ public class User  {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public User(UUID id, String name, String email, String phone, String passwordHash, Role role, String address, String city, String state, String country, String zip, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User( String name, String email, String phone, String passwordHash, Role role, String address, String city, String state, String country, String zip, LocalDateTime createdAt, LocalDateTime updatedAt) {
 
-        this.id = id;
         this.username = name;
         this.email = email;
         this.phone = phone;
@@ -56,14 +54,6 @@ public class User  {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getEmail() {
