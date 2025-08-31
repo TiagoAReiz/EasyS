@@ -27,6 +27,28 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/create").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/create-professional").permitAll()
+                        
+                        // User endpoints
+                        .requestMatchers(HttpMethod.GET, "/users/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/users/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/users/**").authenticated()
+                        
+                        // Service endpoints
+                        .requestMatchers(HttpMethod.GET, "/services/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/services/create").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/services/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/services/**").authenticated()
+                        
+                        // Professional endpoints
+                        .requestMatchers(HttpMethod.GET, "/professionals/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/professionals/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/professionals/**").authenticated()
+                        
+                        // Appointment endpoints
+                        .requestMatchers(HttpMethod.GET, "/appointments/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/appointments/create").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/appointments/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/appointments/**").authenticated()
 
                         .anyRequest().authenticated())
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))

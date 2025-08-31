@@ -1,5 +1,6 @@
 package Easys.Easys.Core.Model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,9 +22,9 @@ public class Service {
     private Long id;
     private String name;
     private String description;
-    private double price;
+    private BigDecimal price;
     private String category;
-    private double duration;
+    private int duration;
     private int rating;
 
     @OneToOne

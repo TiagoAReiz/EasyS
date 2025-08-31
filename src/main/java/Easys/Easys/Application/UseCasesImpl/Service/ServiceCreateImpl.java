@@ -23,6 +23,7 @@ public class ServiceCreateImpl implements ServiceCreate {
     @Override
     public ResponseEntity<?> create(ServiceCreateDto serviceCreateDto) {
         Service service = serviceMapper.toModel(serviceCreateDto);
-        return servicePersistence.save(service);
+        servicePersistence.save(service);
+        return ResponseEntity.ok().build();
     }
 }

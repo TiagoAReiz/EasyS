@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import Easys.Easys.Core.Model.Professional;
 
-public record ServiceCreateDto(
+public record ServiceUpdateDto(
     String name, 
     String description, 
     BigDecimal price, 
